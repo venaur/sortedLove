@@ -1,0 +1,92 @@
+--Polyrythm
+d1 $ s "[drum bd hh bd, can can:2 can:3 can:4 can:2]*2"
+--Polymeter
+d1 $ s "{drum bd hh bd, industrial industrial:2 industrial:5 industrial:4 industrial:2}*2"
+d1 $ s "{drum bd hh bd, can can:2 can:3 can:4 can:2}*2"
+
+--Euclidean
+d1 $ s "industrial:1(5,8,9)"
+d2 $ s "can:1(3,8,3) sn*2"
+d3 $ s "bd(2,8,4), can:3(4,8,2)"
+
+-- lock 1 = in cycles and not seconds for delaytime
+d1$ s "can" # delay 0.8 # delaytime (1/6) # delayfeedback 0.6 # lock 1
+d2$ s "industrial:3*4" # shape "<0.67 0.26 0.88>" # gain "<0.7 0.8 0.6 0.5>"# delay "<0 0.4 0.8>" # delaytime "0.2 0.05" # delayfeedback "<0.5 0.9>" # lock 1 #dry 0.4 # room 0.6 # size 0.99 # cutoff 400 # resonance 0.2
+
+-- PADSSSS
+d1 $ note "<[a4 d4 f4 a4] [f4 a4 d4 d4]>"
+  #s "supergong"
+  #legato "1.5"
+  #room "0.8" #size "0.9" # lpf (slow 8 $ sine * 2000 + 500)
+
+d1 $ superimpose (slow 3 . (|+ note 7 )) $ sound "supergong"
+#note "d4"
+#sustain 32
+#attack 4
+#release 6
+#gain 0.6
+#cutoff (slow 16 $ range 300 3000 sine)
+#resonance (slow 20 $ range 0.1 0.5 sine)
+#pan (slow 19 $ range 0.3 0.7 sine)
+#room 0.9
+#size 0.9
+#dry (slow 15 $ range 0.1 0.4 sine)
+
+d1 $ stack [
+  sound "supergong" # note "d3" #attack 3 # sustain 50 # gain 0.6,
+  slow (fast 10 $ range 1 3 saw) $ sound "supergong" # note "d3" #attack 6 # sustain 32 # gain 0.6 # detune 0.03,
+  fast (slow 32 $ range 1 6 sine) $ sound "supergong" # note "a3" #attack 0.1 # sustain 3 # gain 0.7
+  ]
+
+--a bit cheesy but maybe fun with a different sound
+d1 $ s "moog*16" # n "<0 0.5>" # legato 1 # cutoff (range 200 2400 $ saw) # resonance 0.2 # pan (fast 6 $ square)
+
+--crackles for filtering (to be done)
+d1 $ s "superstatic" # n "d3" #sustain 32 #attack 4 #release 6 #cutoff (slow 20 $ range 700 900 sine)
+
+--lush pads
+d2 $ stack [
+sound "superfm" # n "d3" #sustain 60 #attack 9 #release 18 #resonance (slow 20 $ range 0.2 0.8 sine) #pan (fast 3 $ range 0.45 0.55 sine) #room 0.9 #size 0.9,
+slow (fast 2 $ range 1 3 sine) $ sound "superfm" # n "f4" #sustain 40 #attack 8 #release 3 #detune 2.3 #room 0.9 #size 0.8 #cutoff (slow 13 $ range 300 1800 sine),
+fast (slow 3 $ range 2 5 sine) $ sound "superfm" # n "a4" #sustain 32 #attack 7 #release 6 #detune 1.2 #room 0.9 #size 0.7 #pan (slow 13 $ range 0 1 cosine) #cutoff (slow 13 sine + slow 7 sine |* 1000)
+]
+
+
+--kinda cool
+d1 $ sound "breath"
+#sustain 16
+#attack 3
+#speed 0.2
+#room 0.9
+#size 0.9
+#lpf (slow 8 $ range 400 800 rand)
+#gain (slow 4 $ range 1.5 2 rand)
+
+-- PRIME NUMBERS !!!!!!!!!
+d1 $ sound "dorkbot"
+#note ("a3"+slow 50 (range (-0.5) 0.5 sine))
+#sustain 8
+#speed 0.8
+#detune 1.3
+#cutoff (slow 13 $ range 200 2000 sine)
+#resonance (slow 17 $ range 0.1 0.6 sine)
+#pan (slow 19 $ range 0.3 0.7 rand)
+#gain (slow 23 $ range 0.5 0.8 sine)
+
+--some spatial play
+d3 $ jux (#speed 0.98) $ sound "pad"
+#note (slow 12 $ choose [4, 5, 8])
+
+--i have no idea what i did here but its kinda cool?
+d1 $ stack [
+sound "padlong" #note "e3" #sustain 10
+#cutoff (slow 13 $ range 300 1900 sine)
+#pan (slow 17 $ range 0.3 0.7 cosine)
+# gain (slow 23 $ range 0.7 1.0 sine),
+fast 3 $ sound "padlong" #note "a3" #sustain 10
+#cutoff (slow 11 $ range 200 1200 sine)
+# resonance (slow 19 $ range 0.1 0.5 rand)
+# pan (slow 7 $ range 0.2 0.8 cosine)
+]
+#room 0.9 #size 0.9
+-- also cool: apparently even outside the brackets you can evaluate the whole block as long as there arent any spaces between the lines lol
