@@ -24,7 +24,7 @@ d1 $ silence
 
 d2 $ stack [
 fast 2 $ n (toScale [0,2,3,7,10] "<0 2 0 [0 3]> <1 0> <2 [2 3] 0>") #s "bass" #speed 0.8 #lpf 900  #resonance (range 0.5 0.9 rand) #nudge "0 0.02 0 0.0015",
-fast 2 $ n (toScale [0,2,3,10] "<0 3 [2 0]> <0 2>") #s "inudstiral" #speed 0.9 #nudge "0 0.3"
+fast 2 $ n (toScale [0,2,3,10] "<0 3 [2 0]> <0 2>") #s "industrial" #speed 0.9 #nudge "0 0.3"
 ]
 
 d2 $ silence
